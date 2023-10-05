@@ -33,3 +33,15 @@ fetch(url)
     $("#quoteAuthor").text(authorMsg);
     $("#quoteContent").text(contentMsg);
   });
+
+let weather_url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+fetch(weather_url)
+  .then((res) => res.json())
+  .then((data) => {
+    // console.log(data);
+    let icon = data["icon"];
+    let temp = data["temp"];
+
+    $("#weather-icon").attr("src", icon);
+    $("#weather-temp").text(`${temp}ºC`);
+  });

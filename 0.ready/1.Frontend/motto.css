@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap");
+* {
+  font-family: "Gowun Batang", serif;
+}
+body {
+  background-image: url("https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/background.jpg");
+  background-position: center;
+  background-size: cover;
+  color: white;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  height: 32px;
+  margin-left: 30px;
+}
+.weather {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+.greeting {
+  margin-bottom: 50px;
+}
+.motto {
+  margin-bottom: 100px;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px 0;
+}

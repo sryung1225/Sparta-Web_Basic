@@ -18,3 +18,18 @@ function displayCurrentTime() {
 }
 
 setInterval(displayCurrentTime, 1000);
+
+let url = "https://api.quotable.io/random";
+fetch(url)
+  .then((res) => res.json())
+  .then((data) => {
+    // console.log(data);
+    let author = data["author"];
+    let content = data["content"];
+
+    let authorMsg = `- ${author} -`;
+    let contentMsg = `" ${content} "`;
+
+    $("#quoteAuthor").text(authorMsg);
+    $("#quoteContent").text(contentMsg);
+  });

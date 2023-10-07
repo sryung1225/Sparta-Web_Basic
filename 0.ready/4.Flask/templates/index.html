@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      body {
+        text-align: center;
+      }
       .ball {
         display: inline-block;
         width: 30px;
@@ -34,7 +37,7 @@
   </head>
 
   <body>
-    <!-- app.py 에서 넘긴 data(content)를 가져와 사용 -->
+    <!-- app.py 에서 넘긴 data(context)를 가져와 사용 -->
     <h1>안녕, {{ data.name }}</h1>
     <img
       class="coinman"
@@ -42,11 +45,6 @@
       alt=""
     />
     <h2>로또 번호: {{ data.lotto }}</h2>
-    <h2>랜덤 로또 번호: {{ data.random_lotto }}</h2>
-    <h1>로또 번호</h1>
-    {% for num in data.lotto %}
-    <div class="ball">{{ num|e }}</div>
-    {% endfor %}
 
     <h1>랜덤 로또 번호</h1>
     {% for num in data.random_lotto %}

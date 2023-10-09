@@ -26,7 +26,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-      } */
+        } */
       .weather {
         display: flex;
         align-items: center;
@@ -90,12 +90,17 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link text-white" aria-current="page" href="{{url_for('home')}}""
+                <a
+                  class="nav-link text-white"
+                  aria-current="page"
+                  href="{{ url_for('home')}}"
                   >Home</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="{{url_for('music')}}">Music</a>
+                <a class="nav-link text-white" href="{{ url_for('music')}}"
+                  >Music</a
+                >
               </li>
               <li class="nav-item">
                 <a class="nav-link text-white" href="#">Album</a>
@@ -115,13 +120,13 @@
 
     <div class="container">
       <div class="greeting">
-        <h1>Hello, {{data.name}}!</h1>
+        <h1>Hello, {{ data.name }}</h1>
         <h1 id="current-time"></h1>
       </div>
 
       <div class="motto">
         <h3>My life's motto</h3>
-        <h2>웃으면 행복해집니다.</h2>
+        <h2>{{ data.motto }}</h2>
       </div>
     </div>
 

@@ -3,51 +3,73 @@
 0. Flask : 웹서버를 시작할 수 있는 기능. app이라는 이름으로 플라스크를 시작한다
 1. render_template : html파일을 가져와서 보여준다
 '''
-from flask import Flask, render_template
-from bs4 import BeautifulSoup
-import requests
-
+from flask import Flask, render_template, request
 app = Flask(__name__)
+
+# DB 기본 코드
+import os
+from flask_sqlalchemy import SQLAlchemy
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+        'sqlite:///' + os.path.join(basedir, 'database.db')
+
+db = SQLAlchemy(app)
+
+class Song(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    artist = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    image_url = db.Column(db.String(10000), nullable=False)
+
+    def __repr__(self):
+        return f'{self.username} {self.title} 추천 by {self.username}'
+
+with app.app_context():
+    db.create_all()
+
+
 
 @app.route("/")
 def home():
-    name = "이령"
-    motto = "노력은 배신하지 않는다."
+    name = '이령'
+    motto = "노력은 배신하지 않는다!"
 
     context = {
         "name": name,
         "motto": motto,
     }
-    return render_template("motto.html", data=context)
+    return render_template('motto.html', data=context)
 
-@app.route("/music")
+@app.route("/music/")
 def music():
-    # bs4 시작코드
-    url = "https://www.melon.com/chart/index.htm"
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get(url, headers=headers)
-    soup = BeautifulSoup(data.text, 'html.parser')
-
-    melon_data = []
-    trs = soup.select(".service_list_song > table > tbody > tr")
-    for tr in trs:
-        rank = tr.select_one('.rank').text
-        title = tr.select_one('.rank01 > span > a').text
-        artist = tr.select_one('.rank02 > a').text
-        image = tr.select_one('img')['src']
-        melon_data.append({'rank': rank, 'artist': artist, 'title': title, 'image': image})
-
-    return render_template("music.html", data=melon_data)
+    return render_template('music.html')
 
 @app.route("/iloveyou/<name>/")
 def iloveyou(name):
     motto = f"{name}야 난 너뿐이야!"
+
     context = {
-        "name": name,
-        "motto": motto
+        'name': name,
+        'motto': motto,
     }
-    return render_template("motto.html", data=context)
+    return render_template('motto.html', data=context)
+
+@app.route("/music/create/")
+def music_create():
+    # form에서 보낸 데이터 받아오기
+    username_receive = request.args.get("username")
+    title_receive = request.args.get("title")
+    artist_receive = request.args.get("artist")
+    image_receive = request.args.get("image_url")
+
+    # 데이터를 DB에 저장하기
+    song = Song(username=username_receive, title=title_receive, artist=artist_receive, image_url=image_receive)
+    db.session.add(song)
+    db.session.commit()
+    return render_template('music.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -45,7 +45,8 @@ def home():
 
 @app.route("/music/")
 def music():
-    return render_template('music.html')
+    song_list = Song.query.all()
+    return render_template('music.html', data=song_list)
 
 @app.route("/iloveyou/<name>/")
 def iloveyou(name):

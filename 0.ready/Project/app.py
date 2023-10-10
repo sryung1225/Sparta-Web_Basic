@@ -79,5 +79,14 @@ def music_create():
     # 추천인 기준의 추천 페이지로 이동
     return redirect(url_for("render_music_filter", username=username_receive))
 
+@app.route("/music/delete/<id>")
+def music_delete(id):
+    song_id = Song.query.get(id)
+    db.session.delete(song_id)
+    db.session.commit()
+
+    return redirect(url_for("music"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

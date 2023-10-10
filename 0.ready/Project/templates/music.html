@@ -194,10 +194,15 @@
         </div>
       </div>
 
+      <!-- Card -->
       <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-75 pb-5">
         {% for song in data %}
         <div class="col">
-          <div class="card h-100">
+          <form
+            class="card h-100"
+            action="{{ url_for('music_delete', id=song.id) }}"
+            method="get"
+          >
             <img
               src="{{ song.image_url }}"
               class="card-img-top"
@@ -208,7 +213,8 @@
               <p class="card-text">{{ song.artist }}</p>
               <p class="card-text">추천 by {{ song.username }}</p>
             </div>
-          </div>
+            <button class="btn btn-danger m-1" type="submit">삭제</button>
+          </form>
         </div>
         {% endfor %}
       </div>
